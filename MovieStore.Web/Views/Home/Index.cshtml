@@ -1,0 +1,332 @@
+@using MovieStore.Data.Entities
+
+<!-- Mensagens de Alerta -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row">
+    <!-- Card Usuários -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-people-fill me-2 icon-card"></i>
+                    <strong>Usuários</strong>
+                </div>
+                <span class="badge badge-count rounded-pill">@ViewBag.TotalUsuarios</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash me-1"></i>ID</th>
+                                <th><i class="bi bi-person me-1"></i>Nome</th>
+                                <th><i class="bi bi-envelope me-1"></i>Email</th>
+                                <th><i class="bi bi-key me-1"></i>Login</th>
+                                <th><i class="bi bi-calendar me-1"></i>Data Criação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var usuario in ViewBag.Usuarios as IEnumerable<Usuario>)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@usuario.Id</span></td>
+                                    <td>@usuario.Nome</td>
+                                    <td>@usuario.Email</td>
+                                    <td><code>@usuario.Login</code></td>
+                                    <td>@usuario.DataCriacao.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="add-form p-3 rounded">
+                    <h6 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Adicionar Usuário</h6>
+                    <form method="post" action="/Home/AddUsuario" id="form-usuario">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <input type="text" name="Nome" class="form-control form-control-sm" placeholder="Nome" required />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="email" name="Email" class="form-control form-control-sm" placeholder="Email" required 
+                                       data-validation="email" />
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Login" class="form-control form-control-sm" placeholder="Login" required />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="password" name="Senha" class="form-control form-control-sm" placeholder="Senha" required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-add btn-sm w-100">
+                                    <i class="bi bi-plus me-1"></i>Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Clientes -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-person-badge-fill me-2 icon-card"></i>
+                    <strong>Clientes</strong>
+                </div>
+                <span class="badge badge-count rounded-pill">@ViewBag.TotalClientes</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash me-1"></i>ID</th>
+                                <th><i class="bi bi-person me-1"></i>Nome</th>
+                                <th><i class="bi bi-credit-card me-1"></i>CPF</th>
+                                <th><i class="bi bi-envelope me-1"></i>Email</th>
+                                <th><i class="bi bi-telephone me-1"></i>Telefone</th>
+                                <th><i class="bi bi-geo-alt me-1"></i>Endereço</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var cliente in ViewBag.Clientes as IEnumerable<Cliente>)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@cliente.Id</span></td>
+                                    <td>@cliente.Nome</td>
+                                    <td><code>@cliente.CPF</code></td>
+                                    <td>@cliente.Email</td>
+                                    <td>@cliente.Telefone</td>
+                                    <td>@cliente.Endereco</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="add-form p-3 rounded">
+                    <h6 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Adicionar Cliente</h6>
+                    <form method="post" action="/Home/AddCliente" id="form-cliente">
+                        <div class="row g-2">
+                            <div class="col-md-2">
+                                <input type="text" name="Nome" class="form-control form-control-sm" placeholder="Nome" required />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="CPF" class="form-control form-control-sm" placeholder="CPF" required 
+                                       data-validation="cpf" maxlength="14" />
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="email" name="Email" class="form-control form-control-sm" placeholder="Email" required 
+                                       data-validation="email" />
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Telefone" class="form-control form-control-sm" placeholder="Telefone" 
+                                       data-validation="phone" maxlength="15" />
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Endereco" class="form-control form-control-sm" placeholder="Endereço" required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-add btn-sm w-100">
+                                    <i class="bi bi-plus me-1"></i>Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Filmes -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-film me-2 icon-card"></i>
+                    <strong>Filmes</strong>
+                </div>
+                <span class="badge badge-count rounded-pill">@ViewBag.TotalFilmes</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash me-1"></i>ID</th>
+                                <th><i class="bi bi-film me-1"></i>Título</th>
+                                <th><i class="bi bi-tags me-1"></i>Gênero</th>
+                                <th><i class="bi bi-person-video3 me-1"></i>Diretor</th>
+                                <th><i class="bi bi-calendar me-1"></i>Ano</th>
+                                <th><i class="bi bi-clock me-1"></i>Duração</th>
+                                <th><i class="bi bi-currency-dollar me-1"></i>Valor</th>
+                                <th><i class="bi bi-check-circle me-1"></i>Disponível</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var filme in ViewBag.Filmes as IEnumerable<Filme>)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@filme.Id</span></td>
+                                    <td><strong>@filme.Titulo</strong></td>
+                                    <td><span class="badge bg-info">@filme.Genero</span></td>
+                                    <td>@filme.Diretor</td>
+                                    <td>@filme.AnoLancamento</td>
+                                    <td>@filme.DuracaoMinutos min</td>
+                                    <td><span class="badge bg-success">R$ @filme.ValorLocacao.ToString("F2")</span></td>
+                                    <td><span class="badge bg-primary">@filme.QuantidadeDisponivel</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="add-form p-3 rounded">
+                    <h6 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Adicionar Filme</h6>
+                    <form method="post" action="/Home/AddFilme">
+                        <div class="row g-2">
+                            <div class="col-md-2">
+                                <input type="text" name="Titulo" class="form-control form-control-sm" placeholder="Título" required />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="text" name="Genero" class="form-control form-control-sm" placeholder="Gênero" required />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Diretor" class="form-control form-control-sm" placeholder="Diretor" required />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="number" name="AnoLancamento" class="form-control form-control-sm" placeholder="Ano" required />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="number" name="DuracaoMinutos" class="form-control form-control-sm" placeholder="Min" required />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="number" step="0.01" name="ValorLocacao" class="form-control form-control-sm" placeholder="Valor" required />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="number" name="QuantidadeDisponivel" class="form-control form-control-sm" placeholder="Qtd" required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-add btn-sm w-100">
+                                    <i class="bi bi-plus me-1"></i>Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Locações -->
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="bi bi-clipboard-check-fill me-2 icon-card"></i>
+                    <strong>Locações</strong>
+                </div>
+                <span class="badge badge-count rounded-pill">@ViewBag.TotalLocacoes</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-hash me-1"></i>ID</th>
+                                <th><i class="bi bi-person me-1"></i>Cliente</th>
+                                <th><i class="bi bi-film me-1"></i>Filme</th>
+                                <th><i class="bi bi-calendar-event me-1"></i>Data Locação</th>
+                                <th><i class="bi bi-calendar-x me-1"></i>Data Prevista</th>
+                                <th><i class="bi bi-currency-dollar me-1"></i>Valor</th>
+                                <th><i class="bi bi-check2-square me-1"></i>Devolvido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var locacao in ViewBag.Locacoes as IEnumerable<Locacao>)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-secondary">@locacao.Id</span></td>
+                                    <td>@locacao.Cliente?.Nome</td>
+                                    <td><strong>@locacao.Filme?.Titulo</strong></td>
+                                    <td>@locacao.DataLocacao.ToString("dd/MM/yyyy")</td>
+                                    <td>@locacao.DataDevolucaoPrevista.ToString("dd/MM/yyyy")</td>
+                                    <td><span class="badge bg-success">R$ @locacao.Valor.ToString("F2")</span></td>
+                                    <td>
+                                        @if(locacao.Devolvido)
+                                        {
+                                            <span class="badge bg-success"><i class="bi bi-check-lg me-1"></i>Sim</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning"><i class="bi bi-clock me-1"></i>Não</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="add-form p-3 rounded">
+                    <h6 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Adicionar Locação</h6>
+                    <form method="post" action="/Home/AddLocacao">
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <select name="ClienteId" class="form-select form-select-sm" required>
+                                    <option value="">Selecione o Cliente</option>
+                                    @foreach(var cliente in ViewBag.Clientes as IEnumerable<Cliente>)
+                                    {
+                                        <option value="@cliente.Id">@cliente.Nome</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="FilmeId" class="form-select form-select-sm" required>
+                                    <option value="">Selecione o Filme</option>
+                                    @foreach(var filme in ViewBag.Filmes as IEnumerable<Filme>)
+                                    {
+                                        <option value="@filme.Id">@filme.Titulo</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="date" name="DataDevolucaoPrevista" class="form-control form-control-sm" required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-add btn-sm w-100">
+                                    <i class="bi bi-plus me-1"></i>Adicionar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/validation.js"></script>
