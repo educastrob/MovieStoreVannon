@@ -24,19 +24,15 @@ namespace MovieStore.Services.Validators
         {
             if (string.IsNullOrWhiteSpace(cpf))
                 return false;
-
-            // Remove formatação
+            
             cpf = cpf.Replace(".", "").Replace("-", "").Trim();
-
-            // Verifica se tem 11 dígitos
+            
             if (cpf.Length != 11 || !cpf.All(char.IsDigit))
                 return false;
-
-            // Verifica se todos os dígitos são iguais
+            
             if (cpf.All(c => c == cpf[0]))
                 return false;
-
-            // Valida primeiro dígito verificador
+            
             int sum = 0;
             for (int i = 0; i < 9; i++)
                 sum += int.Parse(cpf[i].ToString()) * (10 - i);
@@ -46,8 +42,7 @@ namespace MovieStore.Services.Validators
 
             if (int.Parse(cpf[9].ToString()) != firstDigit)
                 return false;
-
-            // Valida segundo dígito verificador
+            
             sum = 0;
             for (int i = 0; i < 10; i++)
                 sum += int.Parse(cpf[i].ToString()) * (11 - i);
@@ -62,22 +57,17 @@ namespace MovieStore.Services.Validators
         {
             if (string.IsNullOrWhiteSpace(phone))
                 return false;
-
-            // Remove formatação
+            
             phone = phone.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Trim();
-
-            // Verifica se tem 10 ou 11 dígitos (com ou sem 9 adicional)
+            
             if (phone.Length != 10 && phone.Length != 11)
                 return false;
-
-            // Verifica se são todos números
+            
             if (!phone.All(char.IsDigit))
                 return false;
-
-            // Verifica padrão brasileiro
+            
             if (phone.Length == 11)
             {
-                // Celular com 9 adicional: deve começar com DDD válido e 9
                 var ddd = phone.Substring(0, 2);
                 var ninthDigit = phone[2];
                 
@@ -85,7 +75,6 @@ namespace MovieStore.Services.Validators
             }
             else
             {
-                // Telefone fixo: deve começar com DDD válido
                 var ddd = phone.Substring(0, 2);
                 return IsValidDDD(ddd);
             }

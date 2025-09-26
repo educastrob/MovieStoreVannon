@@ -159,5 +159,65 @@ namespace MovieStore.Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUsuario(int id)
+        {
+            try
+            {
+                await _usuarioService.DeleteUsuarioAsync(id);
+                TempData["SuccessMessage"] = "Usuário excluído com sucesso!";
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir usuário. Tente novamente.";
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCliente(int id)
+        {
+            try
+            {
+                await _clienteService.DeleteClienteAsync(id);
+                TempData["SuccessMessage"] = "Cliente excluído com sucesso!";
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir cliente. Tente novamente.";
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteFilme(int id)
+        {
+            try
+            {
+                await _filmeService.DeleteFilmeAsync(id);
+                TempData["SuccessMessage"] = "Filme excluído com sucesso!";
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir filme. Tente novamente.";
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteLocacao(int id)
+        {
+            try
+            {
+                await _locacaoService.DeleteLocacaoAsync(id);
+                TempData["SuccessMessage"] = "Locação excluída com sucesso!";
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir locação. Tente novamente.";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

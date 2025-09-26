@@ -28,7 +28,6 @@ namespace MovieStore.Services.Services
 
         public async Task<Usuario> CreateUsuarioAsync(Usuario usuario)
         {
-            // Validação de email
             if (!ValidationHelper.IsValidEmail(usuario.Email))
             {
                 throw new ArgumentException("Email inválido. Por favor, insira um email válido.");

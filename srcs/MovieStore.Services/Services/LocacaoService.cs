@@ -27,7 +27,6 @@ namespace MovieStore.Services.Services
 
         public async Task<Locacao> CreateLocacaoAsync(Locacao locacao)
         {
-            // Validações de negócio
             if (locacao.ClienteId <= 0)
             {
                 throw new ArgumentException("Cliente é obrigatório para realizar a locação.");
@@ -42,8 +41,7 @@ namespace MovieStore.Services.Services
             {
                 throw new ArgumentException("Data de devolução deve ser maior que a data atual.");
             }
-
-            // Definir valores padrão
+            
             locacao.DataLocacao = DateTime.Now;
             locacao.Devolvido = false;
 

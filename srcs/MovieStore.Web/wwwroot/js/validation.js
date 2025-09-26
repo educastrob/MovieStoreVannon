@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Validação de Email
     function validateEmail(email) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email);
     }
-
-    // Validação de CPF
+    
     function validateCPF(cpf) {
         cpf = cpf.replace(/[^\d]/g, '');
         
@@ -29,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return parseInt(cpf[10]) === secondDigit;
     }
-
-    // Validação de Telefone
+    
     function validatePhone(phone) {
         phone = phone.replace(/[^\d]/g, '');
         
@@ -41,16 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         return validDDDs.includes(ddd);
     }
-
-    // Formatação de CPF
+    
     function formatCPF(value) {
         return value.replace(/\D/g, '')
                    .replace(/(\d{3})(\d)/, '$1.$2')
                    .replace(/(\d{3})(\d)/, '$1.$2')
                    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     }
-
-    // Formatação de Telefone
+    
     function formatPhone(value) {
         const numbers = value.replace(/\D/g, '');
         if (numbers.length <= 10) {
@@ -59,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return numbers.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
         }
     }
-
-    // Aplicar validações em tempo real
+    
     document.querySelectorAll('[data-validation]').forEach(function(input) {
         input.addEventListener('input', function() {
             const validationType = this.getAttribute('data-validation');
@@ -68,15 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const feedback = this.parentNode.querySelector('.invalid-feedback');
             let isValid = true;
             let message = '';
-
-            // Aplicar formatação
+            
             if (validationType === 'cpf') {
                 this.value = formatCPF(value);
             } else if (validationType === 'phone') {
                 this.value = formatPhone(value);
             }
-
-            // Validar apenas se o campo não estiver vazio
+            
             if (value.trim() !== '') {
                 switch (validationType) {
                     case 'email':
@@ -93,8 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                 }
             }
-
-            // Aplicar classes de validação
+            
             if (isValid) {
                 this.classList.remove('is-invalid');
                 this.classList.add('is-valid');
@@ -107,16 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 feedback.textContent = message;
             }
         });
-
-        // Validação no blur (quando sai do campo)
+        
         input.addEventListener('blur', function() {
             if (this.hasAttribute('required') && this.value.trim() === '') {
                 this.classList.remove('is-valid', 'is-invalid');
             }
         });
     });
-
-    // Validação antes do submit
+    
     document.querySelectorAll('form').forEach(function(form) {
         form.addEventListener('submit', function(e) {
             let hasErrors = false;

@@ -28,35 +28,30 @@ namespace MovieStore.Services.Services
 
         public async Task<Cliente> CreateClienteAsync(Cliente cliente)
         {
-            // Validação de email
             if (!ValidationHelper.IsValidEmail(cliente.Email))
             {
                 throw new ArgumentException("Email inválido. Por favor, insira um email válido.");
             }
-
-            // Validação de CPF
+            
             if (!ValidationHelper.IsValidCPF(cliente.CPF))
             {
                 throw new ArgumentException("CPF inválido. Por favor, insira um CPF válido.");
             }
-
-            // Validação de telefone (se informado)
+            
             if (!string.IsNullOrWhiteSpace(cliente.Telefone) && !ValidationHelper.IsValidPhone(cliente.Telefone))
             {
                 throw new ArgumentException("Telefone inválido. Por favor, insira um telefone válido no formato (XX) XXXXX-XXXX.");
             }
-
-            // Formatação automática
+            
             cliente.CPF = ValidationHelper.FormatCPF(cliente.CPF);
             if (!string.IsNullOrWhiteSpace(cliente.Telefone))
             {
                 cliente.Telefone = ValidationHelper.FormatPhone(cliente.Telefone);
             }
-
-            // Definir data padrão se não informada
+            
             if (cliente.DataNascimento == DateTime.MinValue)
             {
-                cliente.DataNascimento = new DateTime(1990, 1, 1); // Data padrão
+                cliente.DataNascimento = new DateTime(1990, 1, 1);
             }
 
             cliente.DataCadastro = DateTime.Now;

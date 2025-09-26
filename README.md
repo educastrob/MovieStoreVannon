@@ -64,3 +64,6 @@ movie-store-vannon/
 - Entity Framework Core
 - SQL Server 2019
 - Docker & Docker Compose
+
+
+Developed by Eduardo Castro.
